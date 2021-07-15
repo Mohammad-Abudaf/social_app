@@ -1,6 +1,8 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/layouts/home_layout.dart';
 import 'package:social_app/shared/componants/componants.dart';
 import 'package:social_app/shared/cubits/sign_up_cubit/sign_up_cubit.dart';
 import 'package:social_app/shared/styles/colors.dart';
@@ -36,7 +38,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       create: (context) => SignUpCubit(),
       child: BlocConsumer<SignUpCubit, SignUpState>(
         listener: (context, state) {
-          // TODO: implement listener
+            if(state is CreateUserSuccessState){
+              navigateAndFinish(context, HomeLayout());
+            }
         },
         builder: (context, state) {
           var cubit = SignUpCubit().get(context);
@@ -182,21 +186,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: 25.0,
                         ),
-                        defaultButton(
-                            label: 'Sign Up',
-                            onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                cubit.postData(
-                                    firstName: fNameController.text.toString(),
-                                    lastName: lNameController.text.toString(),
-                                    userName: userNameController.text.toString(),
-                                    phoneNumber: phoneNumberController.text.toString(),
-                                    email: emailController.text.toString(),
-                                    password: passwordController.text.toString(),
-                                    confirmPassword: confirmPasswordController.text.toString()
-                                );
+                        ConditionalBuilder(
+                          condition: state is! CreateUserLoadingState,
+                          builder:(context) => defaultButton(
+                              label: 'Sign Up',
+                              onPressed: () {
+                                if (_formKey.currentState.validate()) {
+                                  cubit.registerUser(
+                                      firstName: fNameController.text.toString(),
+                                      lastName: lNameController.text.toString(),
+                                      userName: userNameController.text.toString(),
+                                      phoneNumber: phoneNumberController.text.toString(),
+                                      email: emailController.text.toString(),
+                                      password: passwordController.text.toString(),
+                                  );
+                                }
                               }
-                            }),
+                              ),
+                          fallback: (context) => Center(child: CircularProgressIndicator(),),
+                        ),
                       ],
                     ),
                   ),
