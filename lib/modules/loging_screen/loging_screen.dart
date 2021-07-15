@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:social_app/layouts/home_layout.dart';
 import 'package:social_app/modules/register_sceen/register_screen.dart';
 import 'package:social_app/shared/componants/componants.dart';
-import 'package:social_app/shared/cubits/login_cubit/login_cubit.dart';
 import 'package:social_app/shared/cubits/login_cubit/login_cubit.dart';
 import 'package:social_app/shared/styles/colors.dart';
 
@@ -40,6 +40,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 textColor: Colors.white,
                 fontSize: 16.0
             );
+          }
+          if(state is LoginSuccessState){
+            navigateAndFinish(context, HomeLayout());
           }
         },
         builder: (context, state) {
@@ -98,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               defaultFormField(
                                 controller: passwordController,
-                                isPassword: _isShown,
+                                isPassword: !_isShown,
                                 suffix: _isShown ? Icons.visibility : Icons
                                     .visibility_off,
                                 suffixPressed: () {
@@ -125,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 label: 'Login',
                                 onPressed: () {
                                   if (formKey.currentState.validate()) {
-                                    cubit.postLogin(
+                                    cubit.userLogin(
                                         emailAddress: emailController.text.toString(),
                                         password: passwordController.text.toString()
                                     );

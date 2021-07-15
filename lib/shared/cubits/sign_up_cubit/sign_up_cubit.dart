@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:social_app/models/user_model/user_model.dart';
+import 'package:social_app/shared/network/local/cache.dart';
 
 part 'sign_up_state.dart';
 
@@ -34,6 +35,7 @@ class SignUpCubit extends Cubit<SignUpState> {
           phoneNumber: phoneNumber,
           uId: value.user.uid
       );
+      Cache.sharedPreferences.setString('token', value.user.uid);
       emit(CreateUserSuccessState());
     }).catchError((error) {
       print (error.toString());
