@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:social_app/layouts/home_layout.dart';
-import 'package:social_app/modules/register_sceen/register_screen.dart';
+import 'package:social_app/modules/register/register_screen.dart';
 import 'package:social_app/shared/componants/componants.dart';
 import 'package:social_app/shared/cubits/login_cubit/login_cubit.dart';
 import 'package:social_app/shared/styles/colors.dart';

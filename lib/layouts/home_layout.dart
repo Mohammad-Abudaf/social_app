@@ -17,66 +17,34 @@ class HomeLayout extends StatelessWidget {
 
       },
       builder: (context, state) {
+        var cubit = AppCubit.get(context);
         return Scaffold(
           appBar: AppBar(
             title: Text(
-              'News Feed',
+              cubit.screenTitle[cubit.screenIndex],
               style: TextStyle(
                 fontSize: 25.0,
                 fontWeight: FontWeight.w500,
               ),
             ),
+            actions: [
+              IconButton(icon: Icon(Icons.notifications_none), onPressed: (){}),
+              IconButton(icon: Icon(Icons.search), onPressed: (){}),
+            ],
           ),
-          body: ConditionalBuilder(
-            condition: AppCubit.get(context).userModel != null,
-            builder: (context) => Column(
-              children: <Widget>[
-                if(!FirebaseAuth.instance.currentUser.emailVerified)
-                  Container(
-                    color: Colors.amber.withOpacity(0.6),
-                    height: 50.0,
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.info_outline),
-                        SizedBox(width: 20.0),
-                        Text(
-                          'please verify your email',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                        Spacer(),
-                        TextButton(
-                            onPressed: () {
-                              FirebaseAuth.instance.currentUser.sendEmailVerification().then((value) {
-                                Fluttertoast.showToast(
-                                    msg: 'check your mail',
-                                    backgroundColor: Colors.deepOrange,
-                                    gravity: ToastGravity.BOTTOM,
-                                    toastLength: Toast.LENGTH_LONG
-                                ).catchError((error){
-                                  Fluttertoast.showToast(
-                                      msg: error.toString(),
-                                      backgroundColor: Colors.deepOrange,
-                                      gravity: ToastGravity.BOTTOM,
-                                      toastLength: Toast.LENGTH_LONG
-                                  );
-                                });
-                              });
-                            },
-                            child: Text(
-                              'send',
-                              style: TextStyle(
-                                  color: Colors.lightBlue,
-                                  fontSize: 20.0
-                              ),
-                            ))
-                      ],
-                    ),
-                  ),
-              ],
-            ),
-            fallback: (context) => Center(child: CircularProgressIndicator(),),
+          body: cubit.appScreens[cubit.screenIndex],
+
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: cubit.screenIndex,
+            onTap: (index){
+              cubit.changeScreen(index);
+            },
+            items: [
+              BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.chat_outlined), label: 'Chats'),
+              BottomNavigationBarItem(icon: Icon(Icons.location_on_outlined), label: 'Users'),
+              BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+            ],
           ),
         );
       },

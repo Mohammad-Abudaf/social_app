@@ -11,4 +11,6 @@ class AppErrorState extends AppState{
   AppErrorState(this.error);
 }
 
+class AppChangeScreenBtnNac extends AppState{}
+
 

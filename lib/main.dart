@@ -9,7 +9,8 @@ import 'package:social_app/shared/cubits/bloc_observer.dart';
 import 'package:social_app/shared/network/local/cache.dart';
 import 'package:social_app/shared/styles/colors.dart';
 
-import 'modules/loging_screen/loging_screen.dart';
+import 'modules/loging/loging_screen.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +48,12 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               primarySwatch: MAIN_COLOR,
+              bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                backgroundColor: Colors.white,
+                selectedItemColor: MAIN_COLOR,
+                unselectedItemColor: Colors.grey,
+
+              )
             ),
             home: startWidget,
           );
