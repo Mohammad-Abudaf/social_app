@@ -6,6 +6,7 @@ class UserModel {
   String firstName;
   String lastName;
   String password;
+  bool isEmailVerified;
 
   UserModel({
     this.email,
@@ -14,7 +15,8 @@ class UserModel {
     this.firstName,
     this.lastName,
     this.userName,
-    this.password
+    this.password,
+    this.isEmailVerified
   });
 
   UserModel.fromJson(Map <String, dynamic> json){
@@ -25,6 +27,7 @@ class UserModel {
     uId = json['uId'];
     phone = json['phone'];
     password = json['password'];
+    isEmailVerified = json['isEmailVerified'];
   }
 
   Map <String, dynamic> toMap(){
@@ -36,6 +39,7 @@ class UserModel {
       'user_name': userName,
       'phone' : phone,
       'password' : password,
+      'isEmailVerified': isEmailVerified, 
     };
   }
 }

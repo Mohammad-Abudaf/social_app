@@ -10,7 +10,7 @@ part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit() : super(SignUpInitial());
-  SignUpCubit get(context) => BlocProvider.of(context);
+  static SignUpCubit get(context) => BlocProvider.of(context);
 
   void registerUser({
     @required String firstName,
@@ -19,6 +19,8 @@ class SignUpCubit extends Cubit<SignUpState> {
     @required String phoneNumber,
     @required String email,
     @required String password,
+    @required bool isEmailVerified,
+
   }) {
     emit(CreateUserLoadingState());
     FirebaseAuth.instance
@@ -33,7 +35,7 @@ class SignUpCubit extends Cubit<SignUpState> {
           email: email,
           password: password,
           phoneNumber: phoneNumber,
-          uId: value.user.uid
+          uId: value.user.uid,
       );
       Cache.sharedPreferences.setString('token', value.user.uid);
       emit(CreateUserSuccessState());
@@ -51,6 +53,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     @required String password,
     @required String phoneNumber,
     @required String uId,
+    bool isEmailVerified,
   }) {
     emit(CreateUserLoadingState());
     UserModel model = UserModel(
@@ -61,6 +64,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       phone: phoneNumber,
       uId: uId,
       password: password,
+      isEmailVerified: false,
     );
     FirebaseFirestore.instance
         .collection('users')

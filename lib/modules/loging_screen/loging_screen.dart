@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
           }
         },
         builder: (context, state) {
-          LoginCubit cubit = LoginCubit().get(context);
+          LoginCubit cubit = LoginCubit.get(context);
           return Scaffold(
             body: Padding(
               padding: const EdgeInsets.all(20.0),

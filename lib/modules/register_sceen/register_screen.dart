@@ -29,7 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   var _formKey = GlobalKey<FormState>();
 
-  bool _isShown = false;
+  bool _isShown = true;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             }
         },
         builder: (context, state) {
-          var cubit = SignUpCubit().get(context);
+          var cubit = SignUpCubit.get(context);
           return Scaffold(
             appBar: AppBar(),
             body: Padding(

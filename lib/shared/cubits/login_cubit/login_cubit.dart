@@ -9,7 +9,7 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitial());
-  LoginCubit get(BuildContext context) => BlocProvider.of(context);
+  static LoginCubit get(BuildContext context) => BlocProvider.of(context);
 
   void userLogin ({
     @required String emailAddress,
