@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:social_app/models/user_model/user_model.dart';
 import 'package:social_app/modules/chats/chats_sreen.dart';
 import 'package:social_app/modules/feeds/feeds_screen.dart';
+import 'package:social_app/modules/new_post/new_post_screen.dart';
 import 'package:social_app/modules/settings/settings_screen.dart';
 import 'package:social_app/modules/users/users_screen.dart';
 import 'package:social_app/shared/componants/constats.dart';
@@ -41,14 +42,20 @@ class AppCubit extends Cubit<AppState> {
   List <Widget> appScreens = [
     NewsFeedScreen(),
     ChatsScreen(),
+    NewPostScreen(),
     UsersScreen(),
     SettingsScreen(),
   ];
 
-  List<String> screenTitle = ['News Feed', 'Chats', 'Users', 'Settings'];
+  List<String> screenTitle = ['News Feed', 'Chats','New Post', 'Users', 'Settings'];
 
   void changeScreen(int index){
-    screenIndex = index;
-    emit(AppChangeScreenBtnNac());
+    if(index == 2){
+      emit(AppAddNewPostScreen());
+    }else {
+      screenIndex = index;
+      emit(AppChangeScreenBtnNac());
+    }
+    print (index);
   }
 }

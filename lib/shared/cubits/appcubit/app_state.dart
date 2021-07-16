@@ -13,4 +13,6 @@ class AppErrorState extends AppState{
 
 class AppChangeScreenBtnNac extends AppState{}
 
+class AppAddNewPostScreen extends AppState{}
+
 

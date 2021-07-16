@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:social_app/modules/new_post/new_post_screen.dart';
+import 'package:social_app/shared/componants/componants.dart';
 import 'package:social_app/shared/cubits/appcubit/app_cubit.dart';
 import 'package:social_app/shared/cubits/appcubit/app_cubit.dart';
 
@@ -14,7 +16,9 @@ class HomeLayout extends StatelessWidget {
     // TODO: implement build
     return BlocConsumer<AppCubit, AppState>(
       listener: (context, state) {
-
+        if(state is AppAddNewPostScreen){
+          navigateTo(context, NewPostScreen());
+        }
       },
       builder: (context, state) {
         var cubit = AppCubit.get(context);
@@ -36,12 +40,15 @@ class HomeLayout extends StatelessWidget {
 
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: cubit.screenIndex,
-            onTap: (index){
+            onTap: (int index){
               cubit.changeScreen(index);
+              // print ("cubit index ${cubit.screenIndex}");
+              // print
             },
             items: [
               BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
               BottomNavigationBarItem(icon: Icon(Icons.chat_outlined), label: 'Chats'),
+              BottomNavigationBarItem(icon: Icon(Icons.upload_file), label: 'Post'),
               BottomNavigationBarItem(icon: Icon(Icons.location_on_outlined), label: 'Users'),
               BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
             ],
