@@ -47,6 +47,11 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
+              scaffoldBackgroundColor: Colors.white,
+              appBarTheme: AppBarTheme(
+                elevation: 0,
+                color: Colors.white
+              ),
               primarySwatch: MAIN_COLOR,
               bottomNavigationBarTheme: BottomNavigationBarThemeData(
                 backgroundColor: Colors.white,

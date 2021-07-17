@@ -42,8 +42,6 @@ class HomeLayout extends StatelessWidget {
             currentIndex: cubit.screenIndex,
             onTap: (int index){
               cubit.changeScreen(index);
-              // print ("cubit index ${cubit.screenIndex}");
-              // print
             },
             items: [
               BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),

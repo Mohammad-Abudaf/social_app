@@ -6,6 +6,9 @@ class UserModel {
   String firstName;
   String lastName;
   String password;
+  String image;
+  String coverImage;
+  String bio;
   bool isEmailVerified;
 
   UserModel({
@@ -16,7 +19,10 @@ class UserModel {
     this.lastName,
     this.userName,
     this.password,
-    this.isEmailVerified
+    this.image,
+    this.coverImage,
+    this.isEmailVerified,
+    this.bio,
   });
 
   UserModel.fromJson(Map <String, dynamic> json){
@@ -28,6 +34,9 @@ class UserModel {
     phone = json['phone'];
     password = json['password'];
     isEmailVerified = json['isEmailVerified'];
+    image = json['image'];
+    bio = json['bio'];
+    coverImage = json['cover_image'];
   }
 
   Map <String, dynamic> toMap(){
@@ -39,7 +48,10 @@ class UserModel {
       'user_name': userName,
       'phone' : phone,
       'password' : password,
-      'isEmailVerified': isEmailVerified, 
+      'isEmailVerified': isEmailVerified,
+      'image': image,
+      'bio' : bio,
+      'cover_image': coverImage,
     };
   }
 }
