@@ -13,6 +13,7 @@ Widget defaultFormField({
   IconData prefix,
   IconData suffix,
   Function suffixPressed,
+  String hintText,
   bool isClickable = true,
 }) =>
     TextFormField(
@@ -26,6 +27,7 @@ Widget defaultFormField({
       validator: validate,
       decoration: InputDecoration(
         labelText: label,
+        hintText: hintText,
         prefixIcon: Icon(
           prefix,
         ),
@@ -48,8 +50,7 @@ Widget defaultButton({
   @required Function onPressed,
   @required String label,
   Color textColor = Colors.white,
-}
-) =>
+}) =>
     MaterialButton(
       color: btnColor,
       height: height,
@@ -59,30 +60,42 @@ Widget defaultButton({
         label,
         style: TextStyle(
           color: textColor,
-          fontSize: 25,
-          fontWeight: FontWeight.w600,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
         ),
       ),
     );
 
 void navigateTo(context, widget) => Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => widget,
-  ),
-);
-
+      context,
+      MaterialPageRoute(
+        builder: (context) => widget,
+      ),
+    );
 
 void navigateAndFinish(
-    context,
-    widget,
-    ) =>
+  context,
+  widget,
+) =>
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
         builder: (context) => widget,
       ),
-          (route) {
+      (route) {
         return false;
       },
     );
+
+Widget defaultTextBtn({
+  @required String text,
+  double fontSize = 20.0,
+  FontWeight fontWeight = FontWeight.w500,
+  @required Function function
+
+}) => TextButton(
+    onPressed: function,
+    child: Text(
+     text,
+      style: TextStyle(fontSize: fontSize, fontWeight: fontWeight),
+    ));

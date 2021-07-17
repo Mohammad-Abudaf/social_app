@@ -13,8 +13,6 @@ class SignUpCubit extends Cubit<SignUpState> {
   static SignUpCubit get(context) => BlocProvider.of(context);
 
   void registerUser({
-    @required String firstName,
-    @required String lastName,
     @required String userName,
     @required String phoneNumber,
     @required String email,
@@ -30,11 +28,8 @@ class SignUpCubit extends Cubit<SignUpState> {
       print(value.user.email);
       print(value.user.uid);
       createUser(
-          firstName: firstName,
-          lastName: lastName,
           username: userName,
           email: email,
-          password: password,
           phoneNumber: phoneNumber,
           uId: value.user.uid,
         //image: "image string",
@@ -48,11 +43,8 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   void createUser({
-    @required String firstName,
-    @required String lastName,
     @required String username,
     @required String email,
-    @required String password,
     @required String phoneNumber,
     @required String uId,
     String image = 'http://4cury127mwqb1iku0b2ecwi8.wpengine.netdna-cdn.com/wp-content/uploads/2014/12/default_profile_pic-250x250.jpg',
@@ -60,13 +52,10 @@ class SignUpCubit extends Cubit<SignUpState> {
   }) {
     emit(CreateUserLoadingState());
     UserModel model = UserModel(
-      firstName: firstName,
-      lastName: lastName,
       userName: username,
       email: email,
       phone: phoneNumber,
       uId: uId,
-      password: password,
       image: image,
       isEmailVerified: false,
     );

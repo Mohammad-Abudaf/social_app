@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/modules/edit_profile/edit_profile_screen.dart';
+import 'package:social_app/shared/componants/componants.dart';
 import 'package:social_app/shared/cubits/appcubit/app_cubit.dart';
 import 'package:social_app/shared/cubits/appcubit/app_cubit.dart';
 import 'package:social_app/shared/styles/colors.dart';
@@ -170,7 +172,9 @@ class SettingsScreen extends StatelessWidget {
                       width: 6,
                     ),
                     OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        navigateTo(context, UpdateProfileScreen());
+                      },
                       child: Icon(
                         Icons.edit_outlined,
                         color: MAIN_COLOR,

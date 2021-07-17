@@ -193,12 +193,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   cubit.registerUser(
-                                      firstName: fNameController.text.toString(),
-                                      lastName: lNameController.text.toString(),
                                       userName: userNameController.text.toString(),
                                       phoneNumber: phoneNumberController.text.toString(),
                                       email: emailController.text.toString(),
                                       password: passwordController.text.toString(),
+                                      isEmailVerified: false,
                                   );
                                 }
                               }
