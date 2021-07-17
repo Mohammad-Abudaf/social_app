@@ -109,6 +109,7 @@ class AppCubit extends Cubit<AppState> {
     String coverImage,
 
   }) {
+    emit(AppUpdateDataLoading());
     firebase_storage.FirebaseStorage.instance
         .ref()
         .child('users/${Uri.file(profileImage.path).pathSegments.last}')
@@ -138,6 +139,7 @@ class AppCubit extends Cubit<AppState> {
     String image,
 
   }) {
+    emit(AppUpdateDataLoading());
     firebase_storage.FirebaseStorage.instance
         .ref()
         .child('users/${Uri.file(coverImage.path).pathSegments.last}')
@@ -188,6 +190,7 @@ class AppCubit extends Cubit<AppState> {
 
 }
       ){
+    emit(AppUpdateDataLoading());
     UserModel model = UserModel(
       email: email,
       bio: bio,
