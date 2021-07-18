@@ -33,3 +33,37 @@ class AppUpUploadNewProfilePicError extends AppState {}
 class AppUpdateDataError extends AppState {}
 class AppUpdateDataLoading extends AppState {}
 
+
+class AppCreatePostError extends AppState {
+  final String error;
+  AppCreatePostError(this.error);
+}
+class AppCreatePostSuccess extends AppState {}
+class AppCreatePostLoading extends AppState {}
+
+class AppPickPostImageSuccess extends AppState{}
+class AppPickPostImageLoading extends AppState{}
+class AppPickPostImageError extends AppState{
+  final String error;
+  AppPickPostImageError(this.error);
+}
+
+class AppRemovePostImage extends AppState{}
+
+class AppGetPostsSuccessState extends AppState{}
+class AppGetPostsLoadingState extends AppState{}
+class AppGetPostsErrorState extends AppState{
+  final String error;
+  AppGetPostsErrorState(this.error);
+
+}
+
+class AppLikePostSuccessState extends AppState{}
+class AppLikePostErrorState extends AppState{}
+
+class AppGetPostLikesNumberSuccessState extends AppState{}
+class AppGetPostLikesNumberErrorState extends AppState{
+  final String error;
+  AppGetPostLikesNumberErrorState(this.error);
+
+}

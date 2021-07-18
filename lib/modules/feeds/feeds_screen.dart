@@ -1,58 +1,73 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/models/post_model/post_model.dart';
+import 'package:social_app/shared/cubits/appcubit/app_cubit.dart';
 
 class NewsFeedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Column(children: [
-        Container(
-            child: Card(
-                elevation: 15.0,
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: Stack(
-                  alignment: AlignmentDirectional.bottomEnd,
-                  children: <Widget>[
-                    Image(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                          'https://image.freepik.com/free-photo/appealing-young-woman-sparkle-sunglasses-looking-distance-portrait-glamorous-european-model-with-short-haircut-smiling_197531-20541.jpg'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        'communicate with friends',
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            .copyWith(color: Colors.white, fontSize: 17),
+    return BlocConsumer<AppCubit, AppState>(
+  listener: (context, state) {
+
+  },
+  builder: (context, state) {
+    return ConditionalBuilder(
+      condition: AppCubit.get(context).userModel != null && AppCubit.get(context).posts.length>0,
+      builder: (context) => SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(children: [
+          Container(
+              child: Card(
+                  elevation: 15.0,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  child: Stack(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    children: <Widget>[
+                      Image(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                            'https://image.freepik.com/free-photo/appealing-young-woman-sparkle-sunglasses-looking-distance-portrait-glamorous-european-model-with-short-haircut-smiling_197531-20541.jpg'),
                       ),
-                    )
-                  ],
-                ))),
-        ListView.separated(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) => postBuilder(context),
-          separatorBuilder: (context, index) => SizedBox(height: 5.0,),
-          itemCount: 10,
-        ),
-      ]),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          'communicate with friends',
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              .copyWith(color: Colors.white, fontSize: 17),
+                        ),
+                      )
+                    ],
+                  ))),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) => postBuilder(AppCubit.get(context).posts[index],context, index),
+            separatorBuilder: (context, index) => SizedBox(height: 5.0,),
+            itemCount: AppCubit.get(context).posts.length,
+          ),
+        ]),
+      ),
+      fallback: (context) => Center(child: CircularProgressIndicator()),
     );
+  },
+);
   }
 
-  Widget postBuilder(BuildContext context) => Card(
+  Widget postBuilder(PostModel postModel, BuildContext context, int index) => Card(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
                 children: <Widget>[
                   CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        'https://image.freepik.com/free-photo/lovely-woman-vintage-outfit-expressing-interest-outdoor-shot-glamorous-happy-girl-sunglasses_197531-11312.jpg'),
+                    backgroundImage: NetworkImage('${postModel.userImage}'),
                     radius: 25.0,
                   ),
                   SizedBox(
@@ -64,7 +79,7 @@ class NewsFeedScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'Ave Whitman',
+                            '${postModel.userName}',
                             style: TextStyle(
                               fontSize: 16.0,
                               color: Colors.black,
@@ -82,7 +97,7 @@ class NewsFeedScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 10.0),
                       Text(
-                        'Jan 21, 2021 at 11:00 am',
+                        '${postModel.dateTime}',
                         style: Theme.of(context)
                             .textTheme
                             .caption
@@ -104,48 +119,49 @@ class NewsFeedScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2.0),
                 child: Text(
-                  'A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs. ... One of the most important of these is a topic sentence.',
+                  '${postModel.text}',
                   style: Theme.of(context).textTheme.bodyText1.copyWith(
                         fontSize: 15.0,
                       ),
                 ),
               ),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.zero,
-                child: Wrap(
-                  alignment: WrapAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(end: 6.0),
-                      child: Container(
-                        height: 20.0,
-                        child: MaterialButton(
-                          minWidth: 1.0,
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          child: Text(
-                            '#software',
-                            style: TextStyle(
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
+              // Container(
+              //   width: double.infinity,
+              //   margin: EdgeInsets.zero,
+              //   child: Wrap(
+              //     alignment: WrapAlignment.start,
+              //     children: [
+              //       Padding(
+              //         padding: const EdgeInsetsDirectional.only(end: 6.0),
+              //         child: Container(
+              //           height: 20.0,
+              //           child: MaterialButton(
+              //             minWidth: 1.0,
+              //             padding: EdgeInsets.zero,
+              //             onPressed: () {},
+              //             child: Text(
+              //               '#software',
+              //               style: TextStyle(
+              //                 color: Colors.blue,
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              if(postModel.postImage != '')
+                Container(
                 width: double.infinity,
                 child: Image(
                   width: double.infinity,
                   height: 200,
                   fit: BoxFit.cover,
-                  image: NetworkImage(
-                      'https://image.freepik.com/free-photo/close-up-portrait-magnificent-caucasian-girl-round-pink-sunglasses_197531-20682.jpg'),
+                  image: NetworkImage('${postModel.postImage}'),
                 ),
               ),
+              SizedBox(height: 10.0,),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -163,7 +179,7 @@ class NewsFeedScreen extends StatelessWidget {
                               width: 5.0,
                             ),
                             Text(
-                              '1200',
+                              '${AppCubit.get(context).postsLikesNumber[index]}',
                               style: TextStyle(fontSize: 17.0),
                             ),
                           ],
@@ -184,7 +200,7 @@ class NewsFeedScreen extends StatelessWidget {
                               width: 5.0,
                             ),
                             Text(
-                              '500',
+                              '0',
                               style: TextStyle(fontSize: 17.0),
                             ),
                           ],
@@ -200,8 +216,7 @@ class NewsFeedScreen extends StatelessWidget {
               Row(
                 children: <Widget>[
                   CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        'https://image.freepik.com/free-photo/lovely-woman-vintage-outfit-expressing-interest-outdoor-shot-glamorous-happy-girl-sunglasses_197531-11312.jpg'),
+                    backgroundImage: NetworkImage(AppCubit.get(context).userModel.image),
                     radius: 20.0,
                   ),
                   SizedBox(
@@ -229,7 +244,9 @@ class NewsFeedScreen extends StatelessWidget {
                         size: 25.0,
                         color: Colors.red,
                       ),
-                      onPressed: () {}),
+                      onPressed: () {
+                        AppCubit.get(context).likePost(AppCubit.get(context).postsID[index]);
+                      }),
                   IconButton(
                       icon: Icon(
                         Icons.ios_share,
